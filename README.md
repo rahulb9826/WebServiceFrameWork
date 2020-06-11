@@ -63,9 +63,44 @@ Here ResponseString specifies the data recieved from the webpage.
 
 ## Path
 You need to apply Path annotation over classes and methods which will work as a Servlet. Specify the **url-pattern** to **value** as shown below.
+```
+import com.thinking.machines.framework.Path;
+
+@Path(value="/example")
+public class example
+{
+  @Path(value="/abcdURL")
+  public void abcd(ExampleBean exampleBean,ServletContext servletContext)
+  {
+  //do your stuff
+  }
+ }
+```
 
 ## Forward
-The Forward annotation can be used over any method which you want to either redirect to certain webpage or to any other Method of same class. Specify the value of **url** property in which you have to specify **webpage/Servlet** name. The framework will invoke the requested method & than will redirect to provided **Webpage/Servlet**.
+The Forward annotation can be used over any method which you want to either redirect to certain webpage or to any other Method of same class. Specify the value of **url** property in which you have to specify **webpage/Servlet** name. The framework will invoke the requested method & than will redirect to provided **Webpage/Servlet**. A snippet of it's usage is shown below:
+
+```
+import com.thinking.machines.framework.Forward;
+import com.thinking.machines.framework.Path;
+
+@Path(value="example")
+public class example
+{
+  @Path(value="/abcdURL")
+  @Forward(url="abcd.html")
+  public void abcd(ExampleBean exampleBean,ServletContext servletContext)
+  {
+  //do your stuff
+  }
+  @Path(value="/pqrURL")
+  @Forward(url="servletName")
+  public String pqr(ExampleBean exampleBean,ServletContext servletContext)
+  {
+  //do your stuff
+  }
+ }
+```
 
 ## Secured
 The Secured annotation can be used to perform certain validations before performing the requested method. For this the programmer needs to create a Class which will impliment **WebServiceFramework** & will override **Authenticate** method. A snippet for expected class is 
@@ -74,7 +109,7 @@ shown below.
 ```
 import com.thinking.machines.framework.WebServiceFramework;
 
-public class SessionHandler implements WebServiceFramework
+public class ValidationClass implements WebServiceFramework
 {
   public boolean Authenticate(HttpSession session,HttpServletRequest request,HttpServletResponse response)
   {
@@ -83,10 +118,35 @@ public class SessionHandler implements WebServiceFramework
 }
 
 ```
+**For annotation usage**
+```
+import com.thinking.machines.framework.Upload;
+import com.thinking.machines.framework.path;
+
+@Path(value="/abcdURL")
+  @Secured(service="ValidationClass") //service value must match the name of class implimenting WebServiceFramework
+  public void abcd(Files[] filesArray,HttpServletResponse response)
+  {
+  //do your stuff
+  }
+  ```
+  
 The method will return true/false. The devloper needs to ensure that the method must retrun true only if the validations applied by him are true. The method will execute only if the Authenticate returns true.
 
 ## Upload
-If you want to upload files on the server side than you have to specify **Upload** annotation on the method. The Framework will provide an array of File type which needs to recieved as parameter by the method.
+If you want to upload files on the server side than you have to specify **Upload** annotation on the method. The Framework will provide an array of File type which needs to recieved as parameter by the method. A snippet of annotation usage is shown below:
+
+```
+import com.thinking.machines.framework.Upload;
+import com.thinking.machines.framework.path;
+
+@Path(value="/abcdURL")
+  @Upload
+  public void abcd(Files[] filesArray,HttpServletResponse response)
+  {
+  //do your stuff
+  }
+```
 
 ## PDFTool
 The **PDFTool** creates PDF of the Services the BackEnd devloper has created. If there are some technical complications in the Services
