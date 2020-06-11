@@ -15,7 +15,7 @@ Other than these annotations the Framework provide's PDFTool. This Tool generate
 
 ## Installation
 * Download the repository files (project) from the download section.
-* Place the downloaded Jar File(WebServiceFramework.jar) inside WEB-INF/lib of your web application folder. 
+* Place the downloaded Jar Files inside WEB-INF/lib of your web application folder. 
 
 ## Usage
 * The Front-end devloper needs to request for Servlet using AjaxType as the framework is commited for AJAX request. The framework expects JSON String as recieved data, which will be passed to the method accordingly.
