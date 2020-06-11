@@ -18,7 +18,9 @@ Other than these annotations the Framework provide's PDFTool. This Tool generate
 * Place the downloaded Jar File(WebServiceFramework.jar) inside WEB-INF/lib of your web application folder. 
 
 ## Usage
-The Back-end devloper need to map **Framework** servlet in web.xml to load-on-startup. An another mapping for **Services** servlet is required which will call the requested class and it's method from requested URL. The code is shown below:
+* The Front-end devloper needs to request for Servlet using AjaxType as the framework is commited for AJAX request. The framework expects JSON String as recieved data, which will be passed to the method accordingly.
+
+* The Back-end devloper need to map **Framework** servlet in web.xml to load-on-startup. An another mapping for **Services** servlet is required which will call the requested class and it's method from requested URL. The code is shown below:
 
 **Framework Mapping**
 ```
@@ -39,27 +41,58 @@ The Back-end devloper need to map **Framework** servlet in web.xml to load-on-st
   <url-pattern>/services/*</url-pattern>
 </servlet-mapping>
 ```
+
+* The Back-end devloper also needs to create a file named as **```Config.conf```** inside the WebApplication folder parallel to **WEB-INF** folder. The File will contain the name of the packages of the Services(class files). The package name must be written in **JSON Array** format named as **packageNames**. An Example is shown below:
+```
+{"packageNames":["com.example1.abcd","com.example2.pqr"]}
+```
+
 * Create a Java File inside classes folder of your WebApplication.
 * import the **Framework** Package:
 ``` import com.thinking.machines.Framework.*; ```
 To use a Class & Method as Servlet you need to specify Path annotation on them.
+
 **Parameters for Methods**: The method can request following objects as parameters:
 * **HttpServletRequest**
 * **HttpServletResponse**
 * **HttpSession**
 * **ServletContext**
 * **ResponseString**
+
 Here ResponseString specifies the data recieved from the webpage.
 
 ## Path
 You need to apply Path annotation over classes and methods which will work as a Servlet. Specify the **url-pattern** to **value** as shown below.
 
 ## Forward
-The Forward annotation can be used over any method which you want to either redirect to certain webpage or to any other Method of same class. Specify the value of **url** property in which you have to specify **webpage/Servlet** name. The framework will invoke the requested method & than will redirect to requested **Webpage/Servlet**.
+The Forward annotation can be used over any method which you want to either redirect to certain webpage or to any other Method of same class. Specify the value of **url** property in which you have to specify **webpage/Servlet** name. The framework will invoke the requested method & than will redirect to provided **Webpage/Servlet**.
 
 ## Secured
+The Secured annotation can be used to perform certain validations before performing the requested method. For this the programmer needs to create a Class which will impliment **WebServiceFramework** & will override **Authenticate** method. A snippet for expected class is 
+shown below.
+
+```
+import com.thinking.machines.framework.WebServiceFramework;
+
+public class SessionHandler implements WebServiceFramework
+{
+  public boolean Authenticate(HttpSession session,HttpServletRequest request,HttpServletResponse response)
+  {
+    //do whatever you want
+  }
+}
+
+```
+The method will return true/false. The devloper needs to ensure that the method must retrun true only if the validations applied by him are true. The method will execute only if the Authenticate returns true.
 
 ## Upload
 If you want to upload files on the server side than you have to specify **Upload** annotation on the method. The Framework will provide an array of File type which needs to recieved as parameter by the method.
 
 ## PDFTool
+The **PDFTool** creates PDF of the Services the BackEnd devloper has created. If there are some technical complications in the Services
+like two methods with same value of Path annotation, then it will create another PDF as **Errors.pdf** which will contain the methods having error. To use the **PDFTool** use following line in **cmd**.
+
+``java -cp c:\tomcat9\webapps\``**``webapplication``**``\WEB-INF\lib\*;c:\tomcat9\lib\*; com.thinking.machines.framework.PDFTool``
+
+Change the path of lib folder of tomcat9 accordingly.
+
