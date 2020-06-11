@@ -59,7 +59,7 @@ To use a Class & Method as Servlet you need to specify Path annotation on them.
 * **ServletContext**
 * **ResponseString**
 
-Here ResponseString specifies the data recieved from the webpage.
+Here ResponseString specifies the data recieved from the webpage. The programmer needs to create beans whose object will be recived by the requested method and the bean will contain all the data recieved from the WebPage. The bean must contain setters and getters according to the parameters excpected to be recieved from webpage.
 
 ## Path
 You need to apply Path annotation over classes and methods which will work as a Servlet. Specify the **url-pattern** to **value** as shown below.
