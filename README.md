@@ -7,9 +7,9 @@ As we know that to handle requests for Webpages we need to create Servlets on ba
 ## Features
 The Framework works with the usage of some annoatations which are to applied on the classes & methods. The Annotations are:
 * **Path Annotation-** The Path Annotation is a single value annotation having one member named as value. This annotation defines the **url-pattern** of your Java classes & methods.  
-* **Secured-** The Secured annotation is used for performing certain validations which will decide whether the body is to be evaluated or not.
-* **Forward-** The Forward annotation provide functionality to redirect it a jsp page or method of same class after the execution of this method.
-* **Upload-** The Upload is a Marker annotation which is is used for the methods that requires uploading of Files.
+* **Secured Annotation-** The Secured annotation is used for performing certain validations which will decide whether the body is to be evaluated or not.
+* **Forward Annotation-** The Forward annotation provide functionality to redirect it a jsp page or method of same class after the execution of this method.
+* **Upload Annotation-** The Upload is a Marker annotation which is is used for the methods that requires uploading of Files.
 
 Other than these annotations the Framework provide's PDFTool. This Tool generate's two PDF **Services.pdf & Errors.pdf**. The Errors PDF tells you about techinical complications. 
 
